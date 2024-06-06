@@ -5,9 +5,9 @@
             <td>Passager</td>
             <td>
                 <select name="ID_Passager">
-                    <?php foreach ($listePassagers as $passager) : ?>
+                    <?php foreach ($lesPassagers as $passager) : ?>
                         <option value="<?= $passager['ID_Passager'] ?>" <?= ($lReservation != null && $lReservation['ID_Passager'] == $passager['ID_Passager']) ? 'selected' : '' ?>>
-                            <?= $passager['Nom'] . ' ' . $passager['Prenom'] ?>
+                            <?= $passager['NumPasseport']?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -17,7 +17,7 @@
             <td>Vol</td>
             <td>
                 <select name="ID_Vol">
-                    <?php foreach ($listeVols as $vol) : ?>
+                    <?php foreach ($lesVols as $vol) : ?>
                         <option value="<?= $vol['ID_Vol'] ?>" <?= ($lReservation != null && $lReservation['ID_Vol'] == $vol['ID_Vol']) ? 'selected' : '' ?>>
                             <?= $vol['NumeroVol'] ?>
                         </option>
@@ -37,9 +37,16 @@
             <td></td>
             <td>
                 <input type="submit" <?= ($lReservation != null) ? 'name="Modifier" value="Modifier"' : 'name="Valider" value="Valider"' ?>>
-                <input type="reset" name="Annuler" value="Annuler">
+                <input name="Annuler" type="button" onclick="annulerModification()"value="Annuler">
             </td>
         </tr>
         <?= ($lReservation != null) ? '<input type="hidden" name="ID_Reservation" value="'.$lReservation['ID_Reservation'].'">' : '' ?>
     </table>
+    <script>
+function annulerModification() {
+    // Redirection vers la page 3
+    window.location.href = "index.php?page=5";
+}
+</script>
 </form>
+<img src="image/plan_avion.png">

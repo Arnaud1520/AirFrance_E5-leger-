@@ -1,5 +1,12 @@
+<?php
+// Initialisation de $leVol à null si elle n'est pas définie
+if (!isset($leVol)) {
+    $leVol = null;
+}
+?>
+
 <h3>Ajout/Modification d'un vol</h3>
-<form method="post">
+<form method="post" onsubmit="return validateVolForm()">
     <table>
         <tr>
             <td>Numéro de vol</td>
@@ -16,8 +23,8 @@
         <tr>
             <td>Aéroport de départ</td>
             <td>
-                <select name="AeroportDepart">
-                    <?php foreach ($listeAeroports as $aeroport) : ?>
+                <select name="AeroportDepart" id="AeroportDepart">
+                    <?php foreach ($lesAeroports as $aeroport) : ?>
                         <option value="<?= $aeroport['ID_Aeroport'] ?>" <?= ($leVol != null && $leVol['AeroportDepart'] == $aeroport['ID_Aeroport']) ? 'selected' : '' ?>>
                             <?= $aeroport['Nom'] ?>
                         </option>
@@ -36,8 +43,8 @@
         <tr>
             <td>Aéroport d'arrivée</td>
             <td>
-                <select name="AeroportArrivee">
-                    <?php foreach ($listeAeroports as $aeroport) : ?>
+                <select name="AeroportArrivee" id="AeroportArrivee">
+                    <?php foreach ($lesAeroports as $aeroport) : ?>
                         <option value="<?= $aeroport['ID_Aeroport'] ?>" <?= ($leVol != null && $leVol['AeroportArrivee'] == $aeroport['ID_Aeroport']) ? 'selected' : '' ?>>
                             <?= $aeroport['Nom'] ?>
                         </option>
@@ -49,7 +56,7 @@
             <td>Avion</td>
             <td>
                 <select name="Avion">
-                    <?php foreach ($listeAvions as $avion) : ?>
+                    <?php foreach ($lesAvions as $avion) : ?>
                         <option value="<?= $avion['ID_Avion'] ?>" <?= ($leVol != null && $leVol['Avion'] == $avion['ID_Avion']) ? 'selected' : '' ?>>
                             <?= $avion['Modele'] ?>
                         </option>
@@ -61,9 +68,27 @@
             <td></td>
             <td>
                 <input type="submit" <?= ($leVol != null) ? 'name="Modifier" value="Modifier"' : 'name="Valider" value="Valider"' ?>>
-                <input type="reset" name="Annuler" value="Annuler">
+                <input name="Annuler" type="button" onclick="annulerModification()"value="Annuler">
             </td>
         </tr>
         <?= ($leVol != null) ? '<input type="hidden" name="ID_Vol" value="'.$leVol['ID_Vol'].'">' : '' ?>
     </table>
+    <script>
+function annulerModification() {
+    // Redirection vers la page 3
+    window.location.href = "index.php?page=4";
+}
+</script>
 </form>
+
+<script>
+function validateVolForm() {
+    var aeroportDepart = document.getElementById("AeroportDepart").value;
+    var aeroportArrivee = document.getElementById("AeroportArrivee").value;
+    if (aeroportDepart === aeroportArrivee) {
+        alert("L'aéroport de départ et l'aéroport d'arrivée doivent être différents.");
+        return false;
+    }
+    return true;
+}
+</script>

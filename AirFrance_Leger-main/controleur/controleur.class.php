@@ -1,12 +1,18 @@
 <?php
 	require_once("modele/modele.class.php");
+
 	class Controleur{
+
 		private $unModele;
+
 		public function __construct(){
 			$this->unModele= new Modele();
 		}
 		public function insertPassagers ($tab){
 			$this->unModele->insertPassagers ($tab);
+		}
+		public function updatePassager($tab){
+			$this->unModele->updatePassager($tab);
 		}
 		public function selectAllPassagers (){
 			return $this->unModele->selectAllPassagers();
@@ -116,5 +122,7 @@
 		public function verifConnexion ($email, $mdp){
 			return $this->unModele->verifConnexion($email, $mdp);
 		}
+
+		
 	}
 ?>
